@@ -1,0 +1,28 @@
+import cv2
+import matplotlib.pyplot as plt
+
+# Function to analyze the image histogram
+def analyze_histogram(image_path):
+    img = cv2.imread(image_path)
+
+    if img is None:
+        print("Image not found")
+        return
+
+    # Define colors and channel names
+    colors = ('b', 'g', 'r')
+    names = ('Blue', 'Green', 'Red')
+
+    # Calculate and display histogram
+    for i, color in enumerate(colors):
+        hist = cv2.calcHist([img], [i], None, [256], [0, 256])
+        plt.plot(hist, color=color, label=names[i])
+
+    plt.title("Image Color Histogram")
+    plt.xlabel("Pixel Intensity (0-255)")
+    plt.ylabel("Number of Pixels")
+    plt.legend()
+    plt.show()
+
+# Call the function
+analyze_histogram("image.jpg")
