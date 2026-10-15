@@ -1,0 +1,56 @@
+import cv2
+
+path = r"C:\Users\harik\Downloads\sample-5s-360p.mp4"
+
+# Open the video
+cap = cv2.VideoCapture(path)
+
+if not cap.isOpened():
+    print("Video not found")
+else:
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    delay = int(1000 / fps) if fps > 0 else 30
+
+    print("Video opened successfully")
+
+    # Normal speed
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        cv2.imshow("Normal Speed", frame)
+
+        if cv2.waitKey(delay) & 0xFF == ord('q'):
+            break
+
+    # Restart video
+    cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+
+    # Slow motion
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        cv2.imshow("Slow Motion", frame)
+
+        if cv2.waitKey(delay * 3) & 0xFF == ord('q'):
+            break
+
+    # Restart video
+    cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+
+    # Fast motion
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        cv2.imshow("Fast Motion", frame)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+cap.release()
+cv2.destroyAllWindows()
