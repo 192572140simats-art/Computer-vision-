@@ -1,0 +1,24 @@
+import cv2
+
+video = cv2.VideoCapture(r"C:\Users\harik\OneDrive\Documents\video.mp4.mp4")
+
+if not video.isOpened():
+    print("Video not found!")
+else:
+    frames = []
+
+    while True:
+        ret, frame = video.read()
+        if not ret:
+            break
+        frames.append(frame)
+
+    video.release()
+
+    for frame in reversed(frames):
+        cv2.imshow("Reverse Video", frame)
+
+        if cv2.waitKey(30) & 0xFF == ord('q'):
+            break
+
+    cv2.destroyAllWindows()
