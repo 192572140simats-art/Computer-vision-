@@ -1,0 +1,19 @@
+
+import cv2
+
+img = cv2.imread("image.jpg")
+
+if img is None:
+    print("Image not found!")
+else:
+    roi = img[50:200, 50:200]
+    copy = img.copy()
+
+    h, w = roi.shape[:2]
+    copy[0:h, 0:w] = roi
+
+    cv2.imshow("Original Image", img)
+    cv2.imshow("Cropped and Pasted Image", copy)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
