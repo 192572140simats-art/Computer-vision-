@@ -1,0 +1,38 @@
+import cv2
+
+def reverse_slow_motion():
+    path = r"C:\Users\harik\OneDrive\Documents\video.mp4.mp4"
+
+    cap = cv2.VideoCapture(path)
+
+    if not cap.isOpened():
+        print("Error: Cannot open video")
+        return
+
+    frames = []
+
+    while True:
+        ret, frame = cap.read()
+
+        if not ret:
+            break
+
+        frames.append(frame)
+
+    cap.release()
+
+    if len(frames) == 0:
+        print("No frames found")
+        return
+
+    print("Playing video in reverse slow motion")
+
+    for frame in frames[::-1]:
+        cv2.imshow("Reverse Slow Motion Video", frame)
+
+        if cv2.waitKey(150) & 0xFF == ord('q'):
+            break
+
+    cv2.destroyAllWindows()
+
+reverse_slow_motion()
