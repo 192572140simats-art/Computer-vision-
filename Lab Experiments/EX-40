@@ -1,0 +1,50 @@
+import cv2
+import pytesseract
+
+# Set Tesseract OCR path
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+# Video file path
+video_path = r"C:\Users\harik\OneDrive\Documents\video.mp4.mp4"
+
+# Open video
+cap = cv2.VideoCapture(video_path)
+
+if not cap.isOpened():
+    print("Error: Cannot open video")
+else:
+    print("Video opened successfully")
+
+    extracted_text = []
+    frame_count = 0
+
+    while True:
+        ret, frame = cap.read()
+
+        if not ret:
+            break
+
+        # Extract text once every 30 frames
+        if frame_count % 30 == 0:
+
+            # Convert frame to grayscale
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+            # Extract text using OCR
+            text = pytesseract.image_to_string(gray)
+
+            if text.strip():
+                extracted_text.append(text.strip())
+
+        frame_count += 1
+
+    cap.release()
+
+    # Display extracted text
+    print("\nExtracted Text from Video:")
+
+    if extracted_text:
+        for text in extracted_text:
+            print(text)
+    else:
+        print("No text found in the video.")
